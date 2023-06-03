@@ -1,16 +1,19 @@
 import styled from "styled-components"
-import {EyeSlash} from '@phosphor-icons/react'
+import {Gear} from '@phosphor-icons/react'
 
 export const Container = styled.button`
-    position: absolute;
-    display: flex;
     border-style: none;
-    background-color: transparent;    
-    margin-right: 12px;
+    background-color: rgb(230, 230, 230);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
 `
 
 
-export const Icon = styled(EyeSlash)`
+export const Icon = styled(Gear)`
     color: rgba(0,0,0,.6);
     transition: .2s;
     &:active{

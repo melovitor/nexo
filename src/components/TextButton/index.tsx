@@ -1,13 +1,13 @@
 import { ButtonStyle ,Content, Reference } from "./style"
 
-type Props = {
-    content: string
-    reference: string
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    content?: string
+    reference?: string
 }
 
-export function TextButton({content, reference}: Props){
+export function TextButton({content, reference, ...rest}: Props){
     return(        
-        <ButtonStyle onClick={() => {console.log('Link')}}>
+        <ButtonStyle {...rest}>
             <Content>{content}</Content>
             <Reference>{reference}</Reference>
         </ButtonStyle>        

@@ -1,12 +1,14 @@
 import { ButtonStyle ,Title } from "./style"
+import React from "react";
 
-type Props = {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     title: string
+
 }
 
-export function Button({title}: Props){
+export function Button({title, ...rest}: Props){
     return(        
-        <ButtonStyle onClick={() => {console.log('olabutton')}}>
+        <ButtonStyle {...rest} >
             <Title>{title}</Title>
         </ButtonStyle>        
     )

@@ -1,4 +1,4 @@
-import { Container, TextInput, Description, Label } from "./style"
+import { Container, TextInput} from "./style"
 
 interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
     label?: string
@@ -7,13 +7,10 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
     type?: string
 }
 
-export function Input({label, placeholder, type, ...rest}: Props){
+export function ModalInput({label, placeholder, type, ...rest}: Props){
 
     return(
         <Container {...rest}>
-            <Description>
-                <Label>{label}</Label>
-            </Description>
             <TextInput placeholder={placeholder} type={type}/>
         </Container>
     )   

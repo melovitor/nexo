@@ -6,11 +6,9 @@ export const ButtonStyle = styled.button`
     color: white;
     border-radius: 6px;
     padding: 16px;
-    margin-top: 16px;
     &:active {
         background-color: rgb(84, 199, 255);
     }
-
 
 `
 

@@ -16,11 +16,12 @@ export const Container = styled.div`
     z-index: 1;
     display: flex;
     flex-direction: column;
-    background-color: rgb(250,250,250);
+    background-color:rgb(250,250,250);
     width: 50%;       
     position: relative;
-    padding: 64px 112px;
+    padding: 56px 112px;
     box-sizing: border-box;
+    
 `
 
 export const Form = styled.div`
@@ -45,10 +46,7 @@ export const SubTitle = styled.text`
     margin-bottom: 40px;
 `
 
-export const Forgot = styled.div`
-    display: flex;
-    justify-content: flex-end;
-    margin-top: -32px;
-    margin-bottom: -32px;
-    z-index: 10;
+export const ByStyle = styled.div`
+    margin-top: -120px;
+    z-index: -1;
 `
