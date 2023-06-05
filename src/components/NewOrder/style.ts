@@ -1,14 +1,18 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0,0,0, .6);
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
     position: fixed;
-    display:flex ;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
     justify-content: center;
     align-items: center;
-`
+`;
 
 export const Container = styled.div`
     position: fixed;
@@ -44,3 +48,13 @@ export const Buttons = styled.div`
     gap: 8px;
 `
 
+export const Button = styled.button`
+    width: 100%;
+    height: 72px;
+    border-radius: 6px;
+    background-color: rgb(44, 200, 100);
+    border-style: none;
+    &:active{
+        background-color: rgb(150, 255, 150)
+    }
+`

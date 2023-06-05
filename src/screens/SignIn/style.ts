@@ -10,6 +10,7 @@ export const Wrapper = styled.div`
     background-size: contain;
     background-position: 400px;
     max-width: 1280px;
+    margin-top: 50px;
 `
 export const Container = styled.div`
     flex: 1;

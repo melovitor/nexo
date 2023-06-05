@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState} from 'react'
 import { Sessions, StatusSession, Wrapper } from "./style";
 import { ButtonIcon } from "../ButtonIcon";
 import InIcon from "../../assets/entrada.svg"
@@ -12,16 +12,29 @@ type Props ={
     amount: number
     category: string
     date: string
+    id: number
+    onDeletedValue: (value: number) => void;
+    onEditValue: (value: number) => void;
 }
 
 
-export function Orders({status, title, amount, category, date}:Props){
-    const [isOpen, setIsopen] = useState(false)
+export function Orders({status, title, amount, category, date, id, onDeletedValue, onEditValue}:Props){
+    const [isOpen, setIsopen] = useState(false)  
 
-    function formatCurrency(number: number) {
-        return number.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
-      }
-      
+    amount = Number(amount)
+    const formattedAmount = amount.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL',
+    });
+
+    function handleDeleteOrder (){
+        onDeletedValue(id)
+        setIsopen(!isOpen)
+    }
+    function handleEditOrder (){
+        onEditValue(id)
+        setIsopen(!isOpen)
+    }
 
     return(
         <Wrapper >
@@ -32,7 +45,7 @@ export function Orders({status, title, amount, category, date}:Props){
                     <text>{title}</text>
                 </Sessions>
                 <Sessions>
-                    <text>{formatCurrency(amount)}</text>
+                    <text>{formattedAmount}</text>
                 </Sessions>
                 <Sessions>
                     <text>{category}</text>
@@ -43,7 +56,7 @@ export function Orders({status, title, amount, category, date}:Props){
                 <StatusSession>
                     <ButtonIcon  onClick={() => setIsopen(!isOpen)} />
                 </StatusSession>  
-                {isOpen ? <Menu/>: [] }
+                {isOpen ? <Menu  handleEdit={handleEditOrder} handleDelete={handleDeleteOrder}/>: [] }
         </Wrapper>
    
     )

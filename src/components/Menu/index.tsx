@@ -1,16 +1,21 @@
 import { Container, Wrapper, TextButton, Text } from "./style";
 
-export function Menu(){
+type Props = {
+    handleDelete: () => void
+    handleEdit: () => void
+};
 
+export function Menu({handleDelete, handleEdit}: Props){
+    
     return(
         <Wrapper>
-            <TextButton onClick={() => {console.log('Text')}}>
+            <TextButton onClick={() => handleEdit()}> 
                 <Text>
                     Editar
                 </Text>
             </TextButton>
             <Container/>
-            <TextButton>
+            <TextButton onClick={() => handleDelete()}>
                 <Text>
                     Deletar
                 </Text>

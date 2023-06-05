@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { MagnifyingGlass } from '@phosphor-icons/react';
 
 export const Wrapper = styled.div`
     flex: 1;
@@ -10,6 +11,25 @@ export const Wrapper = styled.div`
     border-radius: 6px;
     margin-bottom: 32px;
 `
+export const Icon = styled(MagnifyingGlass)`
+    border: solid 1px rgb(220, 220, 220);
+    width: 45px;
+    height: 45px;
+    background-color: rgb(250, 250, 250);
+    border-radius: 6px;
+    padding: 8px;
+    box-sizing: border-box;
+    &:active {
+        background-color: rgb(200, 200, 200);
+    }
+`
+
+export const SearchStyle = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`
+
 export const Header = styled.div`
     flex: 1;
     display: flex;
@@ -46,3 +66,4 @@ export const StatusSession = styled.div`
     display: flex;
     justify-content: center;
 `
+
