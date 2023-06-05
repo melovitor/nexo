@@ -16,12 +16,10 @@ export const Icon = styled(MagnifyingGlass)`
     width: 45px;
     height: 45px;
     background-color: rgb(250, 250, 250);
-    border-radius: 6px;
     padding: 8px;
     box-sizing: border-box;
-    &:active {
-        background-color: rgb(200, 200, 200);
-    }
+    border-right: none;
+    
 `
 
 export const SearchStyle = styled.div`
@@ -41,13 +39,13 @@ export const Input = styled.input`
     height: 45px;
     width: 256px;
     background-color: rgb(250, 250, 250);
-    border-radius: 4px;
     border-width: 1px;
     border-color: rgb(220, 220, 220);
     border-style: solid;
-    padding: 16px;
+    padding: 16px 8pxpx;
     box-sizing: border-box;        
     color: black ;
+    border-left: none;
 `
 export const Container = styled.div`
     margin-top: 64px;

@@ -81,7 +81,8 @@ export function CashFlow({ data, inAmount, outAmount, ...rest }: Props) {
             <text>Ações</text>
           </StatusSession>
         </Container>
-        {data.map((item: any, index: any)   => (
+        {data.filter((item: any) => item.title.toLowerCase().includes(search.toLowerCase()))
+        .map((item: any, index: any)   => (
           <Orders
             key={index}
             id={index}
