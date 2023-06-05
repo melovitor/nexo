@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import BgHome from '../../assets/BackgroundHome.png';
 
 export const Wrapper = styled.div`
-    background-color: rgb(18,104,189);
+    background-image: url(${BgHome});
     width: 100%;
     height: 250px;
     display: flex;
@@ -9,6 +10,8 @@ export const Wrapper = styled.div`
     justify-content: center;
     padding: 16px 12.75px;
     box-sizing: border-box;
+    background-repeat: no-repeat;
+    background-size: cover ;
 `
 export const Container = styled.div`
     display: flex;

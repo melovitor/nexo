@@ -65,3 +65,9 @@ export const StatusSession = styled.div`
     justify-content: center;
 `
 
+export const ListEmpty = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 64px;
+`
