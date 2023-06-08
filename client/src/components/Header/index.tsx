@@ -3,15 +3,16 @@ import {Power} from '@phosphor-icons/react'
 
 type Props = {
     handleLogout: () => void;
+    name: string
 }
 
-export function Header({handleLogout}: Props){   
+export function Header({handleLogout, name}: Props){   
     return(
         <Wrapper>
             <Content>
                 <Container>
                     <Title>nexo</Title>
-                    <User> Seja bem Vindo, Vitor!</User>
+                    <User> Seja bem Vindo, {name} !</User>
                 </Container>
                 <button onClick={handleLogout} style={{
                     display: "flex",

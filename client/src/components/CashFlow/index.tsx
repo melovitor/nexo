@@ -14,7 +14,7 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 export function CashFlow({ data, inAmount, outAmount,...rest }: Props) {
     const [orders, setOrders] = useState<any[]>(data);
     const [isEdit , setIsEdit] = useState(false)
-    const [editableKey , setEditableKey] = useState(Number)
+    const [editOrder , setEditOrder] = useState(Object)
     const [search, setSearch] = useState(String)
 
     useEffect(() => {
@@ -24,18 +24,15 @@ export function CashFlow({ data, inAmount, outAmount,...rest }: Props) {
         setOrders(res.data);
       });
     }, []);
-
-    // useEffect(() => {
-    //     setOrders(data);
-    // }, [data]);
   
-    const inValues = data.filter((item: { in: any; }) => item.in);
+    
+    const inValues = orders.filter((item: { in: any; }) => item.in_status);
     const inTotalAmount = inValues.reduce((acc: number, item: { amount: string; }) => {
     const amount = parseFloat(item.amount) || 0;
     return acc + amount;
     }, 0);
 
-    const outValues = data.filter((item: { out: any; }) => item.out);
+    const outValues = orders.filter((item: { out: any; }) => item.in_status == 0);
     const outTotalAmount = outValues.reduce((acc: number, item: { amount: string; }) => {
     const amount = parseFloat(item.amount) || 0;
     return acc + amount;
@@ -44,35 +41,21 @@ export function CashFlow({ data, inAmount, outAmount,...rest }: Props) {
     inAmount(inTotalAmount)
     outAmount(outTotalAmount)
 
-    function handleDelete(value: number){
-      const updatedOrders = [...orders]; 
-      updatedOrders.splice(value, 1);
-      setOrders(updatedOrders)
+    function handleDelete(id: number){
+        const order = orders[id].idtransaction
         Axios.post("http://localhost:5174/transaction", {
-          orders: updatedOrders,
-          isChange: true,
+          data: order,
+          isDelete: true,
           token: localStorage.getItem("isAuth")
         }).then((res) => {
-          console.log(res)
+          location.reload();
         })
     };
-    function handleEdit(value: number){ 
+    function handleEdit(index: number){ 
         setIsEdit(true)
-        setEditableKey(value)
+        setEditOrder(orders[index])
     };
-    
-    function handleValue(item: { title: string, amount: string, category: string, in: boolean, out: boolean }){ 
-      const { title, amount, category, in: isIn, out: isOut } = item;
-
-      data[editableKey].title = title
-      data[editableKey].amount = amount
-      data[editableKey].category = category
-      data[editableKey].in = isIn
-      data[editableKey].out = isOut      
-
-    }  
-
-    
+        
     return (
       <Wrapper>
         <Header>
@@ -119,7 +102,7 @@ export function CashFlow({ data, inAmount, outAmount,...rest }: Props) {
           />
         ))}
         {isEdit ?
-          <NewOrder formTitle='Editar trasação' handleClose={() => {setIsEdit(false)}} handleData={handleValue} defaltValues={data[editableKey]}/>
+          <NewOrder formTitle='Editar trasação' handleClose={() => {setIsEdit(false)}} defaltValues={editOrder}/>
           : []
         }
       </Wrapper>

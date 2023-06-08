@@ -15,7 +15,14 @@ export function Home(){
     const [inTotal, setInTotal] = useState(0)
     const [outTotal, setOutTotal] = useState(0)
     const [total, setTotal] = useState(0)
+    const [name, setName] = useState('')
     const interval = 7200000; // Verificação de login a cada duas horas
+
+    Axios.post("http://localhost:5174/home", {
+            token: localStorage.getItem("isAuth"),
+        }).then((res) => {
+            setName(res.data)
+        })
 
 
     function verifyLogin() {
@@ -38,9 +45,7 @@ export function Home(){
         setOpenNewOrder(!openNewOrder)
     }
 
-    function handleData(data: any) {
-        setOrdersData([...ordersData, data])
-    }
+    
 
     function inValuer(value: number){
         setInTotal(value)
@@ -51,20 +56,25 @@ export function Home(){
     } 
 
     useEffect(() => {
+        Axios.post("http://localhost:5174/transaction", {
+            token: localStorage.getItem("isAuth"),
+        }).then((res) => {
+            setOrdersData(res.data)
+        })
         const totalAmount = inTotal - outTotal;
         setTotal(totalAmount);
       }, [inTotal, outTotal]);
 
     return(
         <Wrapper>
-            <Header handleLogout={() => {setLogout(true)}}/>
+            <Header handleLogout={() => {setLogout(true)}} name={name}/>
             <CardsStyle>
                 <InfoCards title="Entrada" status={1} quantity={inTotal}/> 
                 <InfoCards title="Saida" status={2} quantity={outTotal}/>
                 <InfoCards title="Saldo" status={3} quantity={total}/>
             </CardsStyle>
             <CashFlow onClick={() => {setOpenNewOrder(!openNewOrder)}} data={ordersData} inAmount={inValuer} outAmount={outValuer}/>
-            {openNewOrder ? <NewOrder formTitle='Nova trasação' handleData={handleData} handleClose={closeNewOrder}/> : []}           
+            {openNewOrder ? <NewOrder formTitle='Nova trasação' handleClose={closeNewOrder}/> : []}           
         </Wrapper>
     )
 }

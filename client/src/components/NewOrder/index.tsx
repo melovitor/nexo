@@ -8,15 +8,12 @@ import Axios from 'axios'
 
 type NewOrderProps = {
     handleClose: () => void;
-    handleData: (data: any) => void;
     formTitle: string
     defaltValues?: object
 };
 
 
-export function NewOrder({ handleClose, handleData, formTitle, defaltValues}: NewOrderProps){   
-    console.log(defaltValues)
-
+export function NewOrder({ handleClose, formTitle, defaltValues}: NewOrderProps){   
     const [title, setTitle] = useState(defaltValues ? (defaltValues as { title: string }).title : '')
     const [amount, setAmount] = useState(defaltValues ? (defaltValues as { amount: string }).amount : '')
     const [category, setCategory] = useState(defaltValues ? (defaltValues as { category: string }).category : '')
@@ -24,7 +21,7 @@ export function NewOrder({ handleClose, handleData, formTitle, defaltValues}: Ne
     const [outValue, setOutValue] = useState(false)
     const currentDate = new Date();
     const formattedDate = format(currentDate, 'dd/MM/yyyy')
-
+    
     function  handleCreateNewOrder(){
         if(!title || !amount || !category){
             alert('É necessário preencher todos os campos.');
@@ -33,7 +30,9 @@ export function NewOrder({ handleClose, handleData, formTitle, defaltValues}: Ne
             alert('É necessário preencher todos os campos.');
             return
         }
+
         const data = {
+            idtransaction: defaltValues ? defaltValues.idtransaction : '',
             title: title,
             amount: amount,
             category: category,
@@ -42,16 +41,17 @@ export function NewOrder({ handleClose, handleData, formTitle, defaltValues}: Ne
             date: formattedDate
         }
 
+        
+
         Axios.post("http://localhost:5174/transaction", {
-          orders: data,
-          isCreate: true,
+          data,
+          isCreate: defaltValues ? false : true,
+          isEdit: defaltValues ? true : false,
           token: localStorage.getItem("isAuth")
         }).then((res) => {
           location.reload();
         })
 
-
-        handleData(data)
         handleClose ?  handleClose() : []          
     }
 
@@ -65,16 +65,14 @@ export function NewOrder({ handleClose, handleData, formTitle, defaltValues}: Ne
                 </Header>
                 <ModalInput 
                     placeholder='Titulo' 
-                    value={defaltValues ? (defaltValues as { title: string }).title : ''} 
                     onChange={(e) => {setTitle(e.target.value)}}
-                    defaultValue={defaltValues ? (defaltValues as { title: string }).title : ''} 
+                    defaultValue={title} 
                 />
                 <ModalInput 
                     placeholder='Valor' 
                     type='number' 
-                    value={defaltValues ? (defaltValues as { amount: string }).amount : ''} 
                     onChange={(e) => {setAmount(e.target.value)}}
-                    defaultValue={defaltValues ? (defaltValues as { amount: string }).amount : ''} 
+                    defaultValue={amount} 
                 />
                 <Buttons>
                 <InOutButton title='Entrada' status='IN'  onClick={() => {setInValue(!inValue)}}/>
@@ -82,9 +80,8 @@ export function NewOrder({ handleClose, handleData, formTitle, defaltValues}: Ne
                 </Buttons>
                 <ModalInput 
                     placeholder='Categoria' 
-                    value={defaltValues ? (defaltValues as { category: string }).category : ''} 
                     onChange={(e) => {setCategory(e.target.value)}}
-                    defaultValue={defaltValues ? (defaltValues as { category: string }).category : ''}
+                    defaultValue={category}
                 />
                 <Button onClick={handleCreateNewOrder}>
                     <text>Cadastrar</text>

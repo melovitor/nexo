@@ -24,6 +24,8 @@ export function SignUp(){
             return alert('Todos os campos devem ser preenchidos')
         } else if(password !== confirmPassword){
             return alert('As senhas devem ser iguais!')
+        } else if(password.length < 6){
+            return alert('As senhas devem conter ao menos 6 digitos!')
         }
 
         Axios.post("http://localhost:5174/signup", {
