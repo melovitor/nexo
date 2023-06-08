@@ -12,19 +12,22 @@ interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export function CashFlow({ data, inAmount, outAmount,...rest }: Props) {
-    const [orders, setOrders] = useState<any[]>([]);
+    const [orders, setOrders] = useState<any[]>(data);
     const [isEdit , setIsEdit] = useState(false)
     const [editableKey , setEditableKey] = useState(Number)
     const [search, setSearch] = useState(String)
 
-    Axios.post("http://localhost:5174/transaction", {
-      }).then((res) => {
-        console.log(res)    
-      })
-
     useEffect(() => {
-        setOrders(data);
-    }, [data]);
+      Axios.post("http://localhost:5174/transaction", {
+        token: localStorage.getItem("isAuth")
+      }).then((res) => {
+        setOrders(res.data);
+      });
+    }, []);
+
+    // useEffect(() => {
+    //     setOrders(data);
+    // }, [data]);
   
     const inValues = data.filter((item: { in: any; }) => item.in);
     const inTotalAmount = inValues.reduce((acc: number, item: { amount: string; }) => {
@@ -42,13 +45,16 @@ export function CashFlow({ data, inAmount, outAmount,...rest }: Props) {
     outAmount(outTotalAmount)
 
     function handleDelete(value: number){
-        setOrders(data.splice(value, 1))
-        // Axios.post("http://localhost:5174/home", {
-        //   value,
-        //   isChange: true
-        // }).then((res) => {
-        //   console.log(res)
-        // })
+      const updatedOrders = [...orders]; 
+      updatedOrders.splice(value, 1);
+      setOrders(updatedOrders)
+        Axios.post("http://localhost:5174/transaction", {
+          orders: updatedOrders,
+          isChange: true,
+          token: localStorage.getItem("isAuth")
+        }).then((res) => {
+          console.log(res)
+        })
     };
     function handleEdit(value: number){ 
         setIsEdit(true)
@@ -94,19 +100,19 @@ export function CashFlow({ data, inAmount, outAmount,...rest }: Props) {
             <text>Ações</text>
           </StatusSession>
         </Container>
-        { !data[0] ? 
+        { !orders ? 
         <ListEmpty>
           <text>Para iniciar o controle das suas finanças, adicione uma nova transação.</text>
-        </ListEmpty> :         
-        data.filter((item: any) => item.title.toLowerCase().includes(search.toLowerCase()))
-        .map((item: any, index: any)   => (
+        </ListEmpty> : 
+        orders.filter((item: any) => item.title.toLowerCase().includes(search.toLowerCase()))
+        .map((item: any, index: any) => (
           <Orders
             key={index}
             id={index}
             amount={item.amount}
             category={item.category}
             date={item.date}
-            status={item.in ? 'in' : 'out'}
+            status={item.in_status ? 'in' : 'out'}
             title={item.title}
             onDeletedValue={handleDelete}
             onEditValue={handleEdit}

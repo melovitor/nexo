@@ -4,6 +4,7 @@ import IconClose from '../../assets/fechar.svg'
 import { ModalInput } from '../ModalInput';
 import { InOutButton } from '../InOutButton';
 import { format } from 'date-fns';
+import Axios from 'axios'
 
 type NewOrderProps = {
     handleClose: () => void;
@@ -40,6 +41,16 @@ export function NewOrder({ handleClose, handleData, formTitle, defaltValues}: Ne
             out: outValue,
             date: formattedDate
         }
+
+        Axios.post("http://localhost:5174/transaction", {
+          orders: data,
+          isCreate: true,
+          token: localStorage.getItem("isAuth")
+        }).then((res) => {
+          location.reload();
+        })
+
+
         handleData(data)
         handleClose ?  handleClose() : []          
     }
