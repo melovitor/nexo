@@ -1,4 +1,4 @@
--- Nome do arquivo: V1__create_tables.sql
+-- Nome do arquivo: nexo.sql
 
 -- Criação da tabela "transaction"
 CREATE TABLE IF NOT EXISTS `nexo`.`transaction` (
